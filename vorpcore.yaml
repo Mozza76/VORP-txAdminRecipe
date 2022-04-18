@@ -6,185 +6,320 @@ author: VORPCORE
 description: VORP CORE for RedM made in C# compatible with LUA
 
 tasks:
-  # Download Base Files
+#  Download Base Files
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/txAdminRecipe
+    src: https://github.com/VanTheNoble/vorp_txAdminRecipe
     ref: main
-    dest: ./tmp/qbrcore
-
+    dest: ./tmp/vorp_txAdminRecipe
+  
   - action: move_path
-    src: ./tmp/qbrcore/server.cfg
+    src: ./tmp/vorp_txAdminRecipe/server.cfg
     dest: ./server.cfg
-
+  
   - action: move_path
-    src: ./tmp/qbrcore/myLogo.png
-    dest: ./myLogo.png
+    src: ./tmp/vorp_txAdminRecipe/vorp.png
+    dest: ./vorp.png
 
-  # Prepare Database
+# Prepare Database
   - action: connect_database
   - action: query_database
-    file: ./tmp/qbrcore/qbrcore.sql
-
-
-  # Downloading Standalone Resources  
+    file: ./tmp/vorp_txAdminRecipe/vorps.sql
+  
+# STANDALONE CFX
   - action: download_github
     src: https://github.com/citizenfx/cfx-server-data
     subpath: resources
-    dest: ./resources/[cfx-default]
+    dest: ./resources/[cfx-default]    
+    
+  - action: download_github
+    src: https://github.com/Duguayster/ghmattimysql
+    ref: main
+    dest: ./tmp/ghmattimysql
+
+  - action: move_path
+    src: ./tmp/ghmattimysql/ghmattimysql
+    dest: ./resources/[sql]/ghmattimysql    
+
+# Vorp Core
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-Core
+    ref: master
+    dest: ./tmp/VORP-Core
+    
+  - action: move_path
+    src: ./tmp/VORP-Core/build/vorp_core
+    dest: ./resources/[vorp]/vorp_core
   
+# Vorp Inputs
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-Inputs
+    ref: master
+    dest: ./tmp/VORP-Inputs    
+
+  - action: move_path
+    src: ./tmp/VORP-Inputs/VORP-Inputs[Client-Server]/build/vorp_inputs
+    dest: ./resources/[vorp]/vorp_inputs    
+
+# Vorp characters
   - action: download_file
-    path: ./tmp/files/oxmysql.zip
-    url: https://github.com/overextended/oxmysql/releases/download/v2.2.5/oxmysql.zip
+    path: ./tmp/vorp_character_working.zip
+    url: https://github.com/VORPCORE/VORP-Character/releases/download/v1.0.0/vorp_character_working.zip
+
   - action: unzip
-    dest: ./resources/[standalone]
-    src: ./tmp/files/oxmysql.zip
-    
-  - action: download_github
-    dest: ./resources/[standalone]/connectqueue
-    ref: master
-    src: https://github.com/qbcore-framework/connectqueue
-    
-  - action: download_github
-    dest: ./resources/[standalone]/progressbar
-    ref: main
-    src: https://github.com/qbcore-redm-framework/progressbar
-    
-  - action: download_github
-    dest: ./resources/[standalone]/safecracker
-    ref: main
-    src: https://github.com/qbcore-redm-framework/safecracker
-    
-  - action: download_github
-    dest: ./resources/[standalone]/PolyZone
-    ref: master
-    src: https://github.com/qbcore-redm-framework/PolyZone
+    dest: ./tmp/vorp_character_working
+    src: ./tmp/vorp_character_working.zip    
 
-  - action: download_github
-    dest: ./resources/[standalone]/pma-voice
-    ref: main
-    src: https://github.com/AvarianKnight/pma-voice
+  - action: move_path
+    src: ./tmp/vorp_character_working/vorp_character
+    dest: ./resources/[vorp]/vorp_character    
 
-  - action: download_github
-    dest: ./resources/[standalone]/menuv
-    ref: master
-    src: https://github.com/qbcore-redm-framework/menuv
+# Vorp Inventory
+  #- action: download_file
+  #  path: ./tmp/vorp_inventory.zip
+  #  url: https://github.com/VORPCORE/VORP-Inventory/releases/download/v1.0.8-nulls.3/vorp_inventory.zip
 
-  - action: download_github
-    dest: ./resources/[standalone]/mediccamp
-    ref: main
-    src: https://github.com/qbcore-redm-framework/mediccamp
+  #- action: unzip
+  #  dest: ./tmp/vorp_inventory
+  #  src: ./tmp/vorp_inventory.zip    
 
-  # Download QBCore resources
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-adminmenu
-    ref: main
-    dest: ./resources/[qbr]/qbr-adminmenu
+  #- action: move_path
+  #  src: ./tmp/vorp_inventory/vorp_inventory
+  #  dest: ./resources/[vorp]/vorp_inventory
   
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-ambulancejob
-    ref: main
-    dest: ./resources/[qbr]/qbr-ambulancejob
+    src: https://github.com/VORPCORE/VORP-Inventory
+    ref: master
+    dest: ./tmp/VORP-Inventory 
 
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-banking
-    ref: main
-    dest: ./resources/[qbr]/qbr-banking
+  - action: move_path
+    src: ./tmp/VORP-Inventory/VORP-Inventory[Client-Server]/Build/vorp_inventory/
+    dest: ./resources/[vorp]/vorp_inventory    
+
     
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-clothing
-    ref: main
-    dest: ./resources/[qbr]/qbr-clothing
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-core
-    ref: main
-    dest: ./resources/[qbr]/qbr-core
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-doorlock
-    ref: main
-    dest: ./resources/[qbr]/qbr-doorlock
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-hud
-    ref: main
-    dest: ./resources/[qbr]/qbr-hud
     
+# Vorp Metabolism
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-input
-    ref: main
-    dest: ./resources/[qbr]/qbr-input
-    
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-interiors
-    ref: main
-    dest: ./resources/[qbr]/qbr-interiors
-    
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-inventory
-    ref: main
-    dest: ./resources/[qbr]/qbr-inventory
-    
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-lockpick
-    ref: main
-    dest: ./resources/[qbr]/qbr-lockpick
-    
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-management
-    ref: main
-    dest: ./resources/[qbr]/qbr-management
-    
-  - action: download_github
-    src: https://github.com/Sporny/qbr-menu
-    ref: main
-    dest: ./resources/[qbr]/qbr-menu
+    src: https://github.com/VORPCORE/VORP-Metabolism
+    ref: master
+    dest: ./tmp/VORP-Metabolism 
 
+  - action: move_path
+    src: ./tmp/VORP-Metabolism/VORP-Metabolism/build/vorp_metabolism/
+    dest: ./resources/[vorp]/vorp_metabolism    
+    
+# Vorp ClothingStore
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-multicharacter
-    ref: main
-    dest: ./resources/[qbr]/qbr-multicharacter
+    src: https://github.com/VORPCORE/VORP-ClothingStore
+    ref: master
+    dest: ./tmp/VORP-ClothingStore
 
+  - action: move_path
+    src: ./tmp/VORP-ClothingStore/VORP-ClothingStore[Server-Client]/build/vorp_clothingstore/
+    dest: ./resources/[vorp]/vorp_clothingstore
+    
+# Vorp Stables
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-policejob
-    ref: main
-    dest: ./resources/[qbr]/qbr-policejob
+    src: https://github.com/VORPCORE/VORP-Stables
+    ref: master
+    dest: ./tmp/VORP-Stables
 
+  - action: move_path
+    src: ./tmp/VORP-Stables/VORP-Stables[Client-Server]/build/vorp_stables/
+    dest: ./resources/[vorp]/vorp_stables
+    
+# Vorp AdminMenu
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-scoreboard
-    ref: main
-    dest: ./resources/[qbr]/qbr-scoreboard
+    src: https://github.com/VORPCORE/VORP-AdminMenu
+    ref: master
+    dest: ./tmp/VORP-AdminMenu
 
+  - action: move_path
+    src: ./tmp/VORP-AdminMenu/VORP_AdminMenu[Client-Server]/build/vorp_adminmenu/
+    dest: ./resources/[vorp]/vorp_adminmenu
+    
+# Vorp Stores
   - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-shops
-    ref: main
-    dest: ./resources/[qbr]/qbr-shops
+    src: https://github.com/VORPCORE/VORP-Stores
+    ref: master
+    dest: ./tmp/VORP-Stores
+
+  - action: move_path
+    src: ./tmp/VORP-Stores/VORP-Stores[Client-Server]/build/vorp_stores/
+    dest: ./resources/[vorp]/vorp_stores
+    
+# Vorp WeaponStore  This resource not working.
+  #- action: download_github
+  #  src: https://github.com/VORPCORE/VORP-WeaponStore
+  #  ref: master
+  #  dest: ./tmp/VORP-WeaponStore
+
+  #- action: move_path
+  #  src: ./tmp/VORP-WeaponStore/VORP-WeaponStore[Client-Server]/build/vorp_weaponstore/
+  #  dest: ./resources/[vorp]/vorp_weaponstore
+    
+# Vorp Banks
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-Banks
+    ref: master
+    dest: ./tmp/VORP-Banks
+
+  - action: move_path
+    src: ./tmp/VORP-Banks/vorp_banks/
+    dest: ./resources/[vorp]/vorp_banks
+    
+# Vorp BarberShop
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-BarberShop
+    ref: master
+    dest: ./tmp/VORP-BarberShop
+
+  - action: move_path
+    src: ./tmp/VORP-BarberShop/VORP-BarberShops[Client-Server]/build/vorp_barbershops/
+    dest: ./resources/[vorp]/vorp_barbershops
+    
+# Vorp Cinema
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-Cinema
+    ref: master
+    dest: ./tmp/VORP-Cinema
+
+  - action: move_path
+    src: ./tmp/VORP-Cinema/VORP-Cinema[Client-Server]/build/vorp_cinema/
+    dest: ./resources/[vorp]/vorp_cinema
+    
+# Vorp Housing
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-Housing
+    ref: master
+    dest: ./tmp/VORP-Housing
+
+  - action: move_path
+    src: ./tmp/VORP-Housing/VORP-Housing[Client-Server]/build/vorp_housing/
+    dest: ./resources/[vorp]/vorp_housing
+    
+# Vorp PostMan
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-PostMan
+    ref: master
+    dest: ./tmp/VORP-PostMan
+
+  - action: move_path
+    src: ./tmp/VORP-PostMan/VORP-PostMan[Server-Client]/build/vorp_postman/
+    dest: ./resources/[vorp]/vorp_postman
+    
+# Vorp WoodCutter
+  - action: download_github
+    src: https://github.com/VORPCORE/VORP-WoodCutter
+    ref: master
+    dest: ./tmp/VORP-WoodCutter
+
+  - action: move_path
+    src: ./tmp/VORP-WoodCutter/VORP-WoodCutter[Server-Client]/build/vorp_woodcutter/
+    dest: ./resources/[vorp]/vorp_woodcutter
+    
+# Edit Langs to EN
   
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-smallresources
-    ref: main
-    dest: ./resources/[qbr]/qbr-smallresources
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-spawn
-    ref: main
-    dest: ./resources/[qbr]/qbr-spawn
-    
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-stable
-    ref: main
-    dest: ./resources/[qbr]/qbr-stable
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-weapons
-    ref: main
-    dest: ./resources/[qbr]/qbr-weapons
-
-  - action: download_github
-    src: https://github.com/qbcore-redm-framework/qbr-weathersync
-    ref: main
-    dest: ./resources/[qbr]/qbr-weathersync
   
-  # Clean up
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_postman/Config.json
+
+  - action: move_path
+    src: ./resources/[vorp]/vorp_postman/Config_En.json
+    dest: ./resources/[vorp]/vorp_postman/Config.json
+  
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_housing/Config.json
+
+  - action: move_path
+    src: ./resources/[vorp]/vorp_housing/Config_En.json
+    dest: ./resources/[vorp]/vorp_housing/Config.json
+  
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_cinema/Config.json
+
+  - action: move_path
+    src: ./resources/[vorp]/vorp_cinema/Config_En.json
+    dest: ./resources/[vorp]/vorp_cinema/Config.json
+  
+  #- action: remove_path
+  #  path: ./resources/[vorp]/vorp_weaponstore/Config.json
+
+  #- action: move_path
+  #  src: ./resources/[vorp]/vorp_weaponstore/Config_En.json
+  #  dest: ./resources/[vorp]/vorp_weaponstore/Config.json
+  
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_stables/Config.json
+
+  - action: move_path
+    src: ./resources/[vorp]/vorp_stables/Config_En.json
+    dest: ./resources/[vorp]/vorp_stables/Config.json
+
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_barbershops/Config.json
+    search: '"Es"'
+    replace: '"En"'
+
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_banks/Config.json
+    search: '"Es"'
+    replace: '"En"'
+
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_stores/Config.json
+    search: '"Es"'
+    replace: '"En"'
+
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_metabolism/Config.json
+    search: '"Es"'
+    replace: '"En"'
+
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_core/Config.json
+    search: '"Es"'
+    replace: '"En"'
+  
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_woodcutter/Config.json
+    search: '"Es"'
+    replace: '"En"'
+  
+# Edit white list
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_core/Config.json
+    search: '"Whitelist": true'
+    replace: '"Whitelist": false'
+
+# Edit fxmanifest
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_inventory/fxmanifest.lua
+    search: "'nuistuff.lua',"
+    replace: ""
+    
+  - action: replace_string
+    file: ./resources/[vorp]/vorp_inventory/fxmanifest.lua
+    search: "'invstuff.lua',"
+    replace: ""
+
+# Clean up
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_banks/CitizenFX.Core.dll
+    
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_clothingstore/CitizenFX.Core.dll
+
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_inventory/syn.lua
+
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_inventory/invstuff.lua
+
+  - action: remove_path
+    path: ./resources/[vorp]/vorp_inventory/nuistuff.lua
+
+  - action: remove_path
+    path: ./resources/[sql]/ghmattimysql/config.json
+
   - action: remove_path
     path: ./tmp
